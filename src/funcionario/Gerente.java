@@ -6,7 +6,6 @@ public class Gerente extends Funcionario {
     public Gerente(String nome, Vendedor[] vendedores){
         super(nome);
         this.vendedores = vendedores;
-        this.cargo = "Gerente";
     }
 
     public Vendedor[] getVendedores(){
