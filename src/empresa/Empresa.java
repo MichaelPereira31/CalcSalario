@@ -1,15 +1,28 @@
 package empresa;
 
+import java.util.*;
 import funcionario.Funcionario;
 
 
 public class Empresa{
     private String nome;
-    public Funcionario[] funcionarios;
+    private ArrayList<Funcionario> funcionarios;
 
-    public Empresa(String nome, Funcionario[] funcionarios){
+    public Empresa(String nome){
         this.nome = nome;
-        this.funcionarios = funcionarios;
+        this.funcionarios = new ArrayList<Funcionario>();
+    }
+
+    public ArrayList<Funcionario> getFuncionarios(){
+        return this.funcionarios;
+    }
+
+    public void addFuncionario(Funcionario funcionario){
+        this.funcionarios.add(funcionario);
+    }
+    
+    public void removeFuncionario(Funcionario funcionario){
+        this.funcionarios.remove(funcionario);
     }
 
     public void calcula_salario(){

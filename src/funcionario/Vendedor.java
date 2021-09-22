@@ -12,13 +12,17 @@ public class Vendedor extends Funcionario {
         super(nome);
     }
 
-    public void novaVenda(Double valor, String produto){
-        HashMap<String, Double> venda = new HashMap<String, Double>();
+    public void addVenda(HashMap<String, Double> venda){
+        this.vendas.add(venda);
         
-        venda.put(produto, valor);
-        vendas.add(venda);
+        String produto = String.valueOf(
+            venda.keySet().toArray()[0]
+        );
 
-        this.valorVendido += valor;
+        this.valorVendido += venda.get(produto);
+    }
 
+    public void removeVenda(HashMap<String, Double> venda){
+        this.vendas.remove(venda);
     }
 }

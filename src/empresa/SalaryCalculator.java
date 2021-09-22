@@ -1,6 +1,7 @@
 package empresa; 
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import funcionario.Funcionario;
@@ -11,20 +12,19 @@ import funcionario.Caixa;
 
 public class SalaryCalculator {
     private SalaryDefaultCalculator defaultCalculator = new SalaryDefaultCalculator(); 
-    private SalaryVendedorCalculator vendedorCalculator = new SalaryVendedorCalculator(defaultCalculator);
-    private SalaryCaixaCalculator caixaCalculator = new SalaryCaixaCalculator(vendedorCalculator);
-    private SalaryGerenteCalculator gerenteCalculator = new SalaryGerenteCalculator(caixaCalculator);
+    private SalaryCaixaCalculator caixaCalculator = new SalaryCaixaCalculator(defaultCalculator);
+    private SalaryVendedorCalculator vendedorCalculator = new SalaryVendedorCalculator(caixaCalculator);
+    private SalaryGerenteCalculator gerenteCalculator = new SalaryGerenteCalculator(vendedorCalculator);
 
-    public void calculate(Funcionario[] funcionarios, String nome){
-        List<Funcionario> funcionario_arr = Arrays.asList(funcionarios);
+    public void calculate(ArrayList<Funcionario> funcionarios, String nome){
 
         System.out.println("Salários " + nome);
 
-        funcionario_arr.forEach((Funcionario item) -> {
+        funcionarios.forEach((Funcionario item) -> {
             System.out.print(item.getNome()+ ": ");
 
             double salaryCalculated = this.gerenteCalculator.calcula_salario(item);
-            System.out.println("R$ " + String.valueOf(salaryCalculated));
+            System.out.println("R$ " + String.format("%.2f", salaryCalculated));
         });
     }
 }
@@ -83,7 +83,7 @@ class SalaryVendedorCalculator extends BaseCalculador {
             double salary = this.salary * this.quantidade_salario_minimo;
             double comissao = vendedor.valorVendido * this.taxa_commisao;
 
-            System.out.print("Salario (" + String.valueOf(salary) + ") + Comissão (" + String.valueOf(comissao) + ") = ");
+            System.out.print("Salario (" + String.format("%.2f", salary) + ") + Comissão (" + String.format("%.2f", comissao) + ") = ");
 
             return salary + comissao;
         } else {
@@ -108,7 +108,7 @@ class SalaryGerenteCalculator extends BaseCalculador{
     public double calcula_salario(Funcionario funcionario){
         if (funcionario instanceof Gerente){
             Gerente gerente = (Gerente) funcionario;
-            List<Vendedor> vendedores = Arrays.asList(gerente.getVendedores());
+            ArrayList<Vendedor> vendedores = gerente.getVendedores();
 
             this.total_vendido_na_empresa = 0;
 
@@ -120,7 +120,7 @@ class SalaryGerenteCalculator extends BaseCalculador{
             double salary = this.salary * quantidade_salario_minimo;
             double comissao = this.taxa_comisao * this.total_vendido_na_empresa;
 
-            System.out.print("Salario (" + String.valueOf(salary) + ") + Comissão (" + String.valueOf(comissao) + ") = ");
+            System.out.print("Salario (" + String.format("%.2f", salary) + ") + Comissão (" + String.format("%.2f", comissao) + ") = ");
 
             return salary + comissao;
         }else{

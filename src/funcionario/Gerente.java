@@ -1,14 +1,25 @@
 package funcionario;
 
-public class Gerente extends Funcionario {
-    private Vendedor[] vendedores;
+import java.util.ArrayList;
 
-    public Gerente(String nome, Vendedor[] vendedores){
+
+public class Gerente extends Funcionario {
+    private ArrayList<Vendedor> vendedores; // None
+
+    public Gerente(String nome){
         super(nome);
-        this.vendedores = vendedores;
+        this.vendedores = new ArrayList<Vendedor>();
     }
 
-    public Vendedor[] getVendedores(){
-        return vendedores;
+    public ArrayList<Vendedor> getVendedores(){
+        return this.vendedores;
+    }
+
+    public void addVendedor(Vendedor vendedor){
+        this.vendedores.add(vendedor);
+    }
+
+    public void removeVendedor(Vendedor vendedor){
+        this.vendedores.remove(vendedor);
     }
 }
